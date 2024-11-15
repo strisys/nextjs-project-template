@@ -17,5 +17,5 @@ execute_script() {
 # Execute scripts
 execute_script "setup-pwsh.sh"
 execute_script "setup-git.sh"
-pip install -r "$SCRIPT_DIR/requirements-dev.txt"
-execute_script "setup-sso-configure.sh"
+# pip install -r "$SCRIPT_DIR/requirements-dev.txt"
+# execute_script "setup-sso-configure.sh"

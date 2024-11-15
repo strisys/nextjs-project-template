@@ -47,10 +47,55 @@
 				}
 			},
 			"extensions": [
-				"ms-python.python",
-				"ms-python.vscode-pylance",
+				"johnpapa.vscode-peacock",
+				"oderwat.indent-rainbow",
+				"quicktype.quicktype",
+				"naumovs.color-highlight",
+				"aaron-bond.better-comments",
+				"alefragnani.project-manager",
+				"brunnerh.insert-unicode",
+				"sohamkamani.code-eol",
+				"vikas.code-navigation",
+				// File-specific editors
+				"renesaarsoo.sql-formatter-vsc",
+				"cweijan.vscode-typora",
+				"redhat.vscode-yaml",
+				"ms-azuretools.vscode-docker",
+				// Git/GitHub
 				"eamodio.gitlens",
-				"donjayamanne.githistory"
+				"donjayamanne.githistory",
+				"donjayamanne.git-extension-pack",
+				"ziyasal.vscode-open-in-github",
+				"mhutchie.git-graph",
+				"ms-vscode.remote-repositories",
+				"ms-vscode.azure-repos",
+				// Node
+				"wix.vscode-import-cost",
+				"oouo-diogo-perdigao.docthis",
+				"wallabyjs.console-ninja",
+				"wallabyjs.wallaby-vscode",
+				"dbaeumer.vscode-eslint",
+				"formulahendry.auto-rename-tag",
+				"meganrogge.template-string-converter",
+				"yoavbls.pretty-ts-errors",
+				"christian-kohler.npm-intellisense",
+				"christian-kohler.path-intellisense",
+				"steoates.autoimport",
+				// Powershell
+				"ms-vscode.powershell"
+				// Python
+				// "ms-python.debugpy",
+				// "ms-python.isort",
+				// "ms-python.python",
+				// "ms-python.vscode-pylance",
+				// "ms-toolsai.datawrangler",
+				// "ms-toolsai.jupyter",
+				// "ms-toolsai.jupyter-keymap",
+				// "ms-toolsai.jupyter-renderers",
+				// "ms-toolsai.python-ds-extension-pack",
+				// "ms-toolsai.vscode-jupyter-cell-tags",
+				// "ms-toolsai.vscode-jupyter-powertoys",
+				// "ms-toolsai.vscode-jupyter-slideshow",
 			]
 		}
 	},
