@@ -1,59 +1,95 @@
 # Stage 1: Dependencies
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Install dependencies
+# Install dependencies based on the preferred package manager
 RUN if [ -f package-lock.json ]; then npm ci; \
     else echo "Lockfile not found." && exit 1; \
     fi
 
+# ------------------------------------------------------
 # Stage 2: Builder
-FROM node:18-alpine AS builder
+# ------------------------------------------------------
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy files needed for build
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set environment variables
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Build Next.js
 RUN npm run build
 
-# Stage 3: Runner
-FROM node:18-alpine AS runner
+# ------------------------------------------------------
+# Stage 3: Production Runner
+# ------------------------------------------------------
+FROM node:20-alpine AS runner-prod
 WORKDIR /app
 
-# Set environment variables
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Create non-root user
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+RUN chown -R nextjs:nodejs /app
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+CMD ["node", "server.js"]
+
+# ------------------------------------------------------
+# Stage 4: Development Runner
+# ------------------------------------------------------
+FROM node:20-slim AS runner-dev
+WORKDIR /app
+
+ENV NODE_ENV=development
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    bash \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 nextjs
 
 # Copy built application
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Set correct permissions
+# Copy source files for development
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+COPY --from=builder /app/next.config.ts ./next.config.ts
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+
 RUN chown -R nextjs:nodejs /app
 
-# Switch to non-root user
+RUN npm install
+
 USER nextjs
 
-# Expose port
 EXPOSE 3000
+EXPOSE 5679
 
-# Set port environment variable
 ENV PORT=3000
 
-# Start the application
-CMD ["node", "server.js"]
+CMD ["npm", "run", "dev"]

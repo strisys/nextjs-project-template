@@ -1,0 +1,68 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "NextJS App",
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile",
+		"target": "runner-dev"
+	},
+	"forwardPorts": [
+		3001,
+		5679
+	],
+	"appPort": [
+		"3001:3001",
+		"5679:5679"
+	],
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "pwsh",
+				"terminal.integrated.profiles.linux": {
+					"pwsh": {
+						"path": "/usr/local/bin/pwsh",
+						"icon": "terminal-powershell"
+					}
+				},
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": true,
+				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+				"python.testing.pytestPath": "/usr/local/py-utils/bin/pytest",
+				"files.useExperimentalFileWatcher": true,
+				"git.autorefresh": true,
+				"git.autorefreshIndex": true,
+				"files.watcherExclude": {
+					"**/node_modules/**": true,
+					"**/dist/**": true,
+					"**/.next/**": true
+				}
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"eamodio.gitlens",
+				"donjayamanne.githistory"
+			]
+		}
+	},
+	"postCreateCommand": [
+		".devcontainer/setup.sh"
+	],
+	"remoteUser": "root",
+	"updateRemoteUserUID": true,
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/powershell:1.5.0": {},
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers/features/git:1": {}
+	}
+}
