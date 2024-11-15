@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Getting Started
 
 1. `git clone https://github.com/strisys/nextjs-project-template.git`
-2. `cd nextjs-project-template.git`
+2. `cd nextjs-project-template`
 3. `code .`
 4. `CTRL+Shift+P`, Dev Containers: Rebuild and Reopen in Container
 5. `npm run dev` -or- `yarn dev` -or- `pnpm dev ` -or- `bun dev`
