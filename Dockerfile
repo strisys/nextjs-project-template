@@ -64,6 +64,10 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     bash \
+    build-essential \
+    inotify-tools \
+    python3 \
+    python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd --system --gid 1001 nodejs && \
@@ -90,6 +94,16 @@ USER nextjs
 EXPOSE 3000
 EXPOSE 5679
 
+RUN mkdir -p .next && \
+    chown -R nextjs:nodejs .next
+
+EXPOSE 3000
+EXPOSE 5679
+
 ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Turbopack specific settings
+ENV NEXT_HMR_POLLING_INTERVAL=2000
 
 CMD ["npm", "run", "dev"]

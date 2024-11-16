@@ -8,11 +8,11 @@
 		"target": "runner-dev"
 	},
 	"forwardPorts": [
-		3001,
+		3000,
 		5679
 	],
 	"appPort": [
-		"3001:3001",
+		"3000:3000",
 		"5679:5679"
 	],
 	"customizations": {
@@ -37,13 +37,15 @@
 				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
 				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
 				"python.testing.pytestPath": "/usr/local/py-utils/bin/pytest",
-				"files.useExperimentalFileWatcher": true,
 				"git.autorefresh": true,
 				"git.autorefreshIndex": true,
+				"files.useExperimentalFileWatcher": true,
 				"files.watcherExclude": {
+					"**/.git/objects/**": true,
+					"**/.git/subtree-cache/**": true,
 					"**/node_modules/**": true,
-					"**/dist/**": true,
-					"**/.next/**": true
+					"**/.hg/store/**": true,
+					"**/.next/**": false
 				}
 			},
 			"extensions": [
